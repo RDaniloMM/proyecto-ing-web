@@ -1,0 +1,327 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model area_conocimiento {
+  id                        String                      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre                    String                      @unique
+  usuario_area_conocimiento usuario_area_conocimiento[]
+}
+
+model categoria_evento {
+  id     String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre String
+  evento evento[]
+}
+
+model categoria_grupo {
+  id     String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre String
+  grupo  grupo[]
+}
+
+model categoria_publicacion {
+  id_cat_publicacion String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre             String
+  publicacion        publicacion[]
+}
+
+model comentario {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id     String?      @db.Uuid
+  publicacion_id String?      @db.Uuid
+  contenido      String
+  created_at     DateTime?    @default(now()) @db.Timestamptz(6)
+  publicacion    publicacion? @relation(fields: [publicacion_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuario        User?        @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model conexion {
+  id                                        String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id                                String?         @db.Uuid
+  otro_usuario_id                           String?         @db.Uuid
+  estado                                    estado_conexion @default(Pendiente)
+  solicitado_at                             DateTime?       @default(now()) @db.Timestamptz(6)
+  usuario_conexion_otro_usuario_idTousuario User?           @relation("conexion_otro_usuario_idTousuario", fields: [otro_usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuario_conexion_usuario_idTousuario      User?           @relation("conexion_usuario_idTousuario", fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model cuenta {
+  user_id             String   @db.Uuid
+  type                String
+  provider            String
+  provider_account_id String
+  refresh_token       String?
+  access_token        String?
+  expires_at          Int?
+  token_type          String?
+  scope               String?
+  id_token            String?
+  session_state       String?
+  created_at          DateTime @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime @default(now()) @db.Timestamptz(6)
+  usuario             User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
+
+  @@id([provider, provider_account_id])
+}
+
+model etiqueta {
+  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre           String             @unique
+  recurso_etiqueta recurso_etiqueta[]
+}
+
+model evento {
+  id                  String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre              String
+  descripcion         String?
+  categoria_evento_id String?           @db.Uuid
+  creado_por          String?           @db.Uuid
+  created_at          DateTime?         @default(now()) @db.Timestamptz(6)
+  categoria_evento    categoria_evento? @relation(fields: [categoria_evento_id], references: [id], onUpdate: NoAction)
+  usuario             User?             @relation(fields: [creado_por], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  fecha_evento        fecha_evento[]
+}
+
+model fecha_evento {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  evento_id    String?   @db.Uuid
+  fecha_inicio DateTime? @db.Timestamptz(6)
+  fecha_fin    DateTime? @db.Timestamptz(6)
+  evento       evento?   @relation(fields: [evento_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model gamificacion {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id  String?   @db.Uuid
+  puntos      Int?      @default(0)
+  fecha_logro DateTime? @db.Timestamptz(6)
+  usuario     User?     @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model grupo {
+  id                 String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre             String
+  descripcion        String?
+  categoria_grupo_id String?             @db.Uuid
+  creado_por         String?             @db.Uuid
+  created_at         DateTime?           @default(now()) @db.Timestamptz(6)
+  categoria_grupo    categoria_grupo?    @relation(fields: [categoria_grupo_id], references: [id], onUpdate: NoAction)
+  usuario            User?               @relation(fields: [creado_por], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  miembros_de_grupo  miembros_de_grupo[]
+  publicacion        publicacion[]
+}
+
+model insignia {
+  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre           String             @unique
+  descripcion      String?
+  usuario_insignia usuario_insignia[]
+}
+
+model mensaje {
+  id                                       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  remitente_id                             String?   @db.Uuid
+  destinatario_id                          String?   @db.Uuid
+  contenido                                String
+  leido                                    Boolean?  @default(false)
+  enviado_at                               DateTime? @default(now()) @db.Timestamptz(6)
+  usuario_mensaje_destinatario_idTousuario User?     @relation("mensaje_destinatario_idTousuario", fields: [destinatario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuario_mensaje_remitente_idTousuario    User?     @relation("mensaje_remitente_idTousuario", fields: [remitente_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model miembros_de_grupo {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  grupo_id   String?   @db.Uuid
+  usuario_id String?   @db.Uuid
+  joined_at  DateTime? @default(now()) @db.Timestamptz(6)
+  grupo      grupo?    @relation(fields: [grupo_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuario    User?     @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model notificacion {
+  id                String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id        String?           @db.Uuid
+  tipo_notificacion tipo_notificacion
+  referencia_id     String?           @db.Uuid
+  descripcion       String?
+  leido             Boolean?          @default(false)
+  created_at        DateTime?         @default(now()) @db.Timestamptz(6)
+  usuario           User?             @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model publicacion {
+  id                    String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id            String?                @db.Uuid
+  contenido             String
+  recurso_id            String?                @db.Uuid
+  grupo_id              String?                @db.Uuid
+  cat_publicacion       String?                @db.Uuid
+  created_at            DateTime?              @default(now()) @db.Timestamptz(6)
+  comentario            comentario[]
+  categoria_publicacion categoria_publicacion? @relation(fields: [cat_publicacion], references: [id_cat_publicacion], onUpdate: NoAction)
+  grupo                 grupo?                 @relation(fields: [grupo_id], references: [id], onUpdate: NoAction)
+  recurso               recurso?               @relation(fields: [recurso_id], references: [id], onUpdate: NoAction)
+  usuario               User?                  @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  reaccion              reaccion[]
+}
+
+model reaccion {
+  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id     String?       @db.Uuid
+  publicacion_id String?       @db.Uuid
+  tipo_reaccion  tipo_reaccion
+  created_at     DateTime?     @default(now()) @db.Timestamptz(6)
+  publicacion    publicacion?  @relation(fields: [publicacion_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuario        User?         @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model recomendaciones {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id     String?   @db.Uuid
+  content_id     String?   @db.Uuid
+  content_type   String?
+  recommended_at DateTime? @default(now()) @db.Timestamptz(6)
+  usuario        User?     @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model recurso {
+  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id       String?            @db.Uuid
+  titulo           String
+  descripcion      String?
+  fecha_subida     DateTime?          @default(now()) @db.Timestamptz(6)
+  publicacion      publicacion[]
+  usuario          User?              @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  recurso_etiqueta recurso_etiqueta[]
+  rutas_recurso    rutas_recurso[]
+}
+
+model recurso_etiqueta {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  recurso_id  String?   @db.Uuid
+  etiqueta_id String?   @db.Uuid
+  etiqueta    etiqueta? @relation(fields: [etiqueta_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  recurso     recurso?  @relation(fields: [recurso_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model rutas_recurso {
+  id           String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  recurso_id   String?      @db.Uuid
+  ruta_archivo String
+  tipo_recurso tipo_recurso
+  recurso      recurso?     @relation(fields: [recurso_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model sesion {
+  session_token String   @id
+  user_id       String?  @db.Uuid
+  expires       DateTime @db.Timestamptz(6)
+  created_at    DateTime @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime @default(now()) @db.Timestamptz(6)
+  usuario       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
+}
+
+model token_verificacion {
+  identifier String
+  token      String
+  expires    DateTime @db.Timestamptz(6)
+
+  @@id([identifier, token])
+}
+
+model User {
+  id                                         String                      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                                       String?
+  email                                      String                      @unique
+  emailVerified                              DateTime?                   @map("email_verified") @db.Timestamptz(6)
+  password                                   String?
+  rol                                        rol                         @default(Invitado)
+  biografia                                  String?
+  image                                      String?
+  created_at                                 DateTime?                   @default(now()) @db.Timestamptz(6)
+  comentario                                 comentario[]
+  conexion_conexion_otro_usuario_idTousuario conexion[]                  @relation("conexion_otro_usuario_idTousuario")
+  conexion_conexion_usuario_idTousuario      conexion[]                  @relation("conexion_usuario_idTousuario")
+  cuenta                                     cuenta[]
+  evento                                     evento[]
+  gamificacion                               gamificacion[]
+  grupo                                      grupo[]
+  mensaje_mensaje_destinatario_idTousuario   mensaje[]                   @relation("mensaje_destinatario_idTousuario")
+  mensaje_mensaje_remitente_idTousuario      mensaje[]                   @relation("mensaje_remitente_idTousuario")
+  miembros_de_grupo                          miembros_de_grupo[]
+  notificacion                               notificacion[]
+  publicacion                                publicacion[]
+  reaccion                                   reaccion[]
+  recomendaciones                            recomendaciones[]
+  recurso                                    recurso[]
+  sesion                                     sesion[]
+  usuario_area_conocimiento                  usuario_area_conocimiento[]
+  usuario_insignia                           usuario_insignia[]
+
+  @@map("usuario")
+}
+
+model usuario_area_conocimiento {
+  id                   String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id           String?            @db.Uuid
+  area_conocimiento_id String?            @db.Uuid
+  area_conocimiento    area_conocimiento? @relation(fields: [area_conocimiento_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuario              User?              @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model usuario_insignia {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  usuario_id     String?   @db.Uuid
+  insignia_id    String?   @db.Uuid
+  fecha_obtenida DateTime? @default(now()) @db.Timestamptz(6)
+  insignia       insignia? @relation(fields: [insignia_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuario        User?     @relation(fields: [usuario_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+enum estado_conexion {
+  Pendiente
+  Aceptado
+  Rechazado
+}
+
+enum rol {
+  Invitado
+  Estudiante
+  Moderador
+  Docente
+}
+
+enum tipo_notificacion {
+  Comentario
+  Reaccion
+  Conexion
+  Publicacion
+  Evento
+  Mensaje
+  Recomendacion
+}
+
+enum tipo_reaccion {
+  Me_gusta     @map("Me gusta")
+  Me_encanta   @map("Me encanta")
+  Me_sorprende @map("Me sorprende")
+  Me_ayuda     @map("Me ayuda")
+  Inspirador
+  No_me_gusta  @map("No me gusta")
+}
+
+enum tipo_recurso {
+  Video
+  Documento
+  Presentacion
+  Imagen
+  Audio
+  Otro
+}
