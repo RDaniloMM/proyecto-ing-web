@@ -9,8 +9,8 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { SocialButton } from "./SocialButton";
-import { GoogleLogo } from "@/components/logos";
+/* import { SocialButton } from "./SocialButton";
+import { GoogleLogo } from "@/components/logos"; */
 import { registerRoute } from "@/auth/routes";
 import { LoginForm } from "./LoginForm";
 
@@ -47,12 +47,12 @@ export const LoginCard = ({
           </p>
         )}
         <LoginForm />
-        <div className='my-4'>
+        {/* <div className='my-4'>
           <SocialButton provider='google'>
             <GoogleLogo className='mr-2 size-4' />
             <span>Inicia sesión con Google</span>
           </SocialButton>
-        </div>
+        </div> */}
       </CardContent>
       <CardFooter>
         <div className=' w-full text-sm text-center'>

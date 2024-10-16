@@ -1,10 +1,15 @@
 import Link from "next/link";
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
+import { OptionsAuth } from "@/components/ui/OptionsAuth";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Users, MessageCircle, TrendingUp } from "lucide-react";
 import Logo from "@/components/ui/logo";
 
-export default function GuestHomePage() {
+const GuestHomePage = async () => {
+  const session = await auth();
+
   return (
     <div className='min-h-screen bg-white'>
       <header className='bg-white shadow-md'>
@@ -15,21 +20,26 @@ export default function GuestHomePage() {
           >
             <Logo />
           </Link>
-          <nav className='space-x-4'>
-            <Button
-              asChild
-              variant='ghost'
-              className='text-gray-700 hover:text-gray-900 hover:bg-gray-100'
-            >
-              <Link href='/login'>Iniciar sesión</Link>
-            </Button>
-            <Button
-              asChild
-              className='bg-blue-900 hover:bg-blue-800 text-white'
-            >
-              <Link href='/register'>Crear cuenta</Link>
-            </Button>
-          </nav>
+
+          {session && session.user ? (
+            <OptionsAuth user={session.user} />
+          ) : (
+            <nav className='space-x-4'>
+              <Button
+                asChild
+                variant='ghost'
+                className='text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+              >
+                <Link href='/login'>Iniciar sesión</Link>
+              </Button>
+              <Button
+                asChild
+                className='bg-blue-900 hover:bg-blue-800 text-white'
+              >
+                <Link href='/register'>Crear cuenta</Link>
+              </Button>
+            </nav>
+          )}
         </div>
       </header>
 
@@ -163,7 +173,6 @@ export default function GuestHomePage() {
             <div>
               <h3 className='text-xl font-semibold mb-4'>Contáctanos</h3>
               <p className='text-gray-300'>info@educonnect.com</p>
-              <p className='text-gray-300'>+1 (555) 123-4567</p>
             </div>
           </div>
           <div className='mt-8 pt-8 border-t border-gray-800 text-center text-gray-400'>
@@ -173,4 +182,5 @@ export default function GuestHomePage() {
       </footer>
     </div>
   );
-}
+};
+export default GuestHomePage;

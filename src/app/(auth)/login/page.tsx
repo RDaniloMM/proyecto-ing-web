@@ -10,7 +10,7 @@ export default function LoginPage({
 
   return (
     <div className='w-full min-h-screen grid grid-cols-1 lg:grid-cols-1 py-4'>
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex flex-col items-center justify-center bg-gray-400'>
         <LoginCard
           isVerified={isVerified}
           OAuthAccountNotLinked={OAuthAccountNotLinked}
