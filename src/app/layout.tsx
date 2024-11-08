@@ -3,8 +3,8 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 
 // Componentes de Contexto
-/* import { ThemeProvider } from "@/components/context/ThemeProvider";
-import { QueryProvider } from "@/components/context/QueryProvider"; */
+/* import { ThemeProvider } from "@/components/context/ThemeProvider";*/
+import { QueryProvider } from "@/components/context/QueryProvider";
 
 // Utilidades
 /* import { Analytics } from "@vercel/analytics/react";
@@ -74,17 +74,17 @@ export default function RootLayout({
           fontSans.variable
         )} */
       >
-        {/* <QueryProvider>
-          <ThemeProvider */}
+        <QueryProvider>
+          {/*<ThemeProvider />}
         {/* attribute='class'
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange
           > */}
-        {children}
-        {/* <Analytics />
-          </ThemeProvider>
-        </QueryProvider> */}
+          {children}
+          {/* <Analytics />
+          </ThemeProvider> */}
+        </QueryProvider>
       </body>
     </html>
   );
