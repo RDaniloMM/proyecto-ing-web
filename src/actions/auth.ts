@@ -2,7 +2,7 @@
 
 import { signIn, signOut } from "@/auth";
 import { loginType, registerSchema, registerType } from "@/schemas/auth";
-/* import bcrypt from "bcryptjs"; */
+import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { defaultRoute } from "@/auth/routes";
 import { AuthError } from "next-auth";
@@ -66,14 +66,14 @@ export const registerAction = async (values: registerType) => {
     } */
 
     // hash de la contraseña
-    /* const passwordHash = await bcrypt.hash(data.password, 10); */
+    const passwordHash = await bcrypt.hash(data.password, 10);
 
     // crear el usuario
     await prisma.user.create({
       data: {
         email: data.email,
         name: data.name,
-        password: data.password,
+        password: passwordHash,
       },
     });
 

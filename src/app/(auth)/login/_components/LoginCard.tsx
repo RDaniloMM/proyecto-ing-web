@@ -24,7 +24,7 @@ export const LoginCard = ({
   OAuthAccountNotLinked,
 }: LoginCardProps) => {
   return (
-    <Card className='relative max-w-md shadow-md pt-12'>
+    <Card className='relative max-w-md shadow-md pt-12 bg-gray-200'>
       <CardHeader>
         <div className='absolute inset-x-0 -top-14 flex justify-center'></div>
         <CardTitle className='text-3xl font-semibold text-center'>

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { loginSchema } from "@/schemas/auth";
-/* import bcrypt from "bcryptjs"; */
+import bcrypt from "bcryptjs";
 /* import { nanoid } from "nanoid"; */
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -45,11 +45,11 @@ export const authConfig = {
         }
 
         // verificar si la contraseña es correcta
-        /* const isValid = await bcrypt.compare(data.password, user.password); */
+        const isValid = await bcrypt.compare(data.password, user.password);
 
-        /*  if (!isValid) {
+        if (!isValid) {
           throw new Error("Contraseña incorrecta");
-        } */
+        }
 
         // verificación de email
         /*

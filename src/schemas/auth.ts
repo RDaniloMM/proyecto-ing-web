@@ -19,7 +19,7 @@ export const registerSchema = z
     name: z
       .string({ required_error: "El nombre es obligatorio" })
       .min(1, "El nombre es obligatorio")
-      .max(32, "El nombre debe tener menos de 32 caracteres"),
+      .max(48, "El nombre debe tener menos de 32 caracteres"),
     email: z
       .string({ required_error: "El correo electrónico es obligatorio" })
       .min(1, "El correo electrónico es obligatorio")
