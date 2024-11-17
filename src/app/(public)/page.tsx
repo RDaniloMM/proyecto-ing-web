@@ -30,13 +30,13 @@ const GuestHomePage = async () => {
                 variant='ghost'
                 className='text-gray-700 hover:text-gray-900 hover:bg-gray-100'
               >
-                <Link href='/login'>Iniciar sesión</Link>
+                <Link href='/register/paso2'>Iniciar sesión</Link>
               </Button>
               <Button
                 asChild
                 className='bg-blue-900 hover:bg-blue-800 text-white'
               >
-                <Link href='/register'>Crear cuenta</Link>
+                <Link href='/register"'>Crear cuenta</Link>
               </Button>
             </nav>
           )}
