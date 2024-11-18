@@ -11,10 +11,10 @@ export const registerRoute = "/register";
 export const paso2Route = "/register/paso2";
 
 // Rutas de autenticación
-export const authRoutes = [loginRoute, registerRoute];
+export const authRoutes = [loginRoute, registerRoute, paso2Route];
 
 // Todos los usuarios pueden acceder a las rutas públicas
-export const publicRoutes = ["/", "/api/producto"];
+export const publicRoutes = ["/", "/api"];
 
 // Solo los usuarios autenticados pueden acceder a las rutas y subrutas protegidas
 export const protectedRoutes = ["/dashboard"];
