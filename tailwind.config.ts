@@ -1,3 +1,4 @@
+import { title } from "process";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -9,7 +10,18 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+		fontFamily: {
+			leaguespartan: ["League Spartan", "sans-serif"],
+			lato: ["Lato", "sans-serif"],
+		},
   		colors: {
+			WhiteCalido: '#EFEFEF',
+			WhiteVariacion: '#EAEAEB',
+			BlackCalido: '#141719',
+			BlackOscuro: '#0E0F11',
+			GrayCalido: '#808284',
+			BorderColor: '#262626',
+			VioletCalido: '#5A65CA',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

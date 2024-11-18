@@ -8,6 +8,7 @@ export const loginRoute = "/login";
 export const logoutRoute = "/logout";
 // Ruta para registror un nuevo usuario
 export const registerRoute = "/register";
+export const paso2Route = "/register/paso2";
 
 // Rutas de autenticación
 export const authRoutes = [loginRoute, registerRoute];
