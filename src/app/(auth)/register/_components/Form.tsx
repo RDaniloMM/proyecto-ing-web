@@ -6,13 +6,20 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { registerAction } from "@/actions/auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 
 const RegisterForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Recuperar el plan seleccionado de los parámetros de la URL
+  const selectedPlan = searchParams.get("plan");
+
+  // Determinar el rol basado en el plan
+  const rol = selectedPlan === "Plan Estudiante" ? "Estudiante" : "Docente";
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -21,17 +28,18 @@ const RegisterForm = () => {
       email: "",
       password: "",
       confirmPassword: "",
+      rol: rol,
     },
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     setError(null);
     startTransition(async () => {
-      const response = await registerAction(values);
+      const response = await registerAction(values); // Enviar datos al backend
       if (response.error) {
         setError(response.error);
       } else {
-        router.push("/");
+        router.push("/register/paso3"); // Redirigir al paso 3
       }
     });
   }
@@ -39,8 +47,13 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className='text-WhiteCalido max-w-md mx-auto p-6 space-y-6 rounded-lg'
+      method='post' // Cambiar el método a POST
+      className='text-WhiteCalido max-w-4xl mx-auto p-6 space-y-6 rounded-lg'
     >
+      <h2 className='text-xl font-bold text-center mb-4'>
+        Rol seleccionado: <span className='text-green-500'>{rol}</span>
+      </h2>
+
       {/* Campo Nombres */}
       <div className='flex flex-col'>
         <label
@@ -123,7 +136,7 @@ const RegisterForm = () => {
           disabled={isPending}
           className='w-full bg-WhiteVariacion text-BlackOscuro font-leaguespartan font-semibold border border-BorderColor rounded-lg p-2 hover:bg-gray-300'
         >
-          Registrate
+          Registrar datos
         </button>
       </div>
     </form>

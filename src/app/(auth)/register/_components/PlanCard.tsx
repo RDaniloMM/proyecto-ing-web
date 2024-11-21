@@ -1,6 +1,5 @@
 import { CheckCircleIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
 
-
 interface PlanCardProps {
   title: string;
   requirements: string;
@@ -39,7 +38,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
       <div className='flex justify-center'>
         <button
           className='bg-WhiteVariacion text-BlackOscuro rounded-lg font-semibold font-leaguespartan hover:bg-gray-300 w-[142px] h-[47px]'
-          onClick={() => onSelectPlan(title)} // Llama a la función de callback con el título del plan
+          onClick={() => onSelectPlan(title)} // Llama al callback con el título del plan
         >
           Escoger Plan
         </button>

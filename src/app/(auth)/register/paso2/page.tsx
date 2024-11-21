@@ -2,7 +2,7 @@ import Header from "@/components/ui/Header";
 import StepIndicator from "@/app/(auth)/register/_components/StepIndicator";
 import Form from "@/app/(auth)/register/_components/Form";
 
-export default function paso2() {
+export default function Paso2() {
   return (
     <>
       <Header />
@@ -11,14 +11,16 @@ export default function paso2() {
         <h1 className='text-[40px] font-bold font-leaguespartan text-center mb-8'>
           Ingresa tus datos
         </h1>
-        <div className='flex flex-col items-center md:flex-row md:justify-center gap-8'>
+        <div className='w-full max-w-6xl flex flex-col items-center md:flex-row md:justify-center gap-8 px-4'>
           {/* Indicador de pasos */}
           <div className='mb-8 md:mb-0'>
             <StepIndicator currentStep={2} />
           </div>
-          {/* Contenedor de los planes */}
-          <div className='flex flex-col md:flex-row justify-center gap-8'>
-            <Form />
+          {/* Contenedor del formulario */}
+          <div className='w-full flex justify-center'>
+            <div className='w-full max-w-4xl'>
+              <Form />
+            </div>
           </div>
         </div>
       </main>

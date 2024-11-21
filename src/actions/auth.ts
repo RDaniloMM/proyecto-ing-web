@@ -40,14 +40,13 @@ export const registerAction = async (values: registerType) => {
     }
 
     // verificar si el usuario ya existe
-    /* const user = await prisma.user.findUnique({
-      where: {
-        email: data.email,
-      },
-      include: {
-        account: true, // Incluir las cuentas asociadas
-      },
-    }); */
+    const existingUser = await prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (existingUser) {
+      return { error: "El correo electrónico ya está registrado." };
+    }
 
     /* if (user) {
       // Verificar si tiene cuentas OAuth vinculadas
