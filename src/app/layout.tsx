@@ -1,5 +1,3 @@
-import type { Metadata, Viewport } from "next";
-import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 
 // Componentes de Contexto
@@ -9,12 +7,6 @@ import { QueryProvider } from "@/components/context/QueryProvider";
 // Utilidades
 /* import { Analytics } from "@vercel/analytics/react";
 import { siteConfig } from "@/config/site"; */
-import { cn } from "@/lib/utils";
-
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
 /* 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.urlBase),
@@ -53,13 +45,6 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
 }; */
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-};
 
 export default function RootLayout({
   children,

@@ -11,7 +11,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { User } from "next-auth";
 import { useRouter } from "next/navigation";
-import { Rol } from "@prisma/client";
 
 export async function OptionsAuth({ user }: { user: User }) {
   const router = useRouter();

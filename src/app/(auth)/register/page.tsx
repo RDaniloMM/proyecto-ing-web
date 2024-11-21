@@ -8,7 +8,7 @@ import PlanCard from "@/app/(auth)/register/_components/PlanCard";
 
 export default function HomePage() {
   const router = useRouter();
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [, setSelectedPlan] = useState<string | null>(null);
 
   const handlePlanSelection = (plan: string) => {
     setSelectedPlan(plan); // Almacena el plan seleccionado temporalmente
