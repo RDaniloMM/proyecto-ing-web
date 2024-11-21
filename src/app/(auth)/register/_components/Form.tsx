@@ -1,95 +1,127 @@
-import React from "react";
+"use client";
 
-const Form: React.FC = () => {
+import { registerSchema } from "@/schemas/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { registerAction } from "@/actions/auth";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+
+const RegisterForm = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
+    setError(null);
+    startTransition(async () => {
+      const response = await registerAction(values);
+      if (response.error) {
+        setError(response.error);
+      } else {
+        router.push("/");
+      }
+    });
+  }
+
   return (
-    <form className=" text-WhiteCalido max-w-md mx-auto p-6 space-y-6 rounded-lg">
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className='text-WhiteCalido max-w-md mx-auto p-6 space-y-6 rounded-lg'
+    >
       {/* Campo Nombres */}
-      <div className="flex flex-col md:flex-row md:space-x-4">
-        <div className="flex-1">
-          <label
-            htmlFor="firstName"
-            className="block text-sm font-bold mb-2 text-GrayCalido"
-          >
-            Nombres:
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            placeholder="John"
-            className="w-full bg-BlackCalido text-sm border border-BorderColor rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-GrayCalido"
-          />
-        </div>
-        <div className="flex-1">
-          <label
-            htmlFor="lastName"
-            className="block text-sm font-bold mb-2 text-GrayCalido"
-          >
-            Apellidos:
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            placeholder="Doe"
-            className="w-full bg-BlackCalido text-sm border border-BorderColor rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-GrayCalido"
-          />
-        </div>
-      </div>
-
-      {/* Campo Universidad */}
-      <div>
+      <div className='flex flex-col'>
         <label
-          htmlFor="university"
-          className="block text-sm font-bold mb-2 text-GrayCalido"
+          htmlFor='name'
+          className='block text-sm font-bold mb-2 text-GrayCalido'
         >
-          Universidad:
+          Nombres:
         </label>
         <input
-          type="text"
-          id="university"
-          name="university"
-          placeholder="Universidad Nacional Jorge Basadre Grohmann"
-          className="w-full bg-BlackCalido text-sm border border-BorderColor rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-GrayCalido"
+          {...form.register("name")}
+          type='text'
+          id='name'
+          placeholder='John'
+          disabled={isPending}
+          className='w-full bg-BlackCalido text-sm border border-BorderColor rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-GrayCalido'
         />
       </div>
 
       {/* Campo Email */}
-      <div>
-        <label htmlFor="email" className="block text-sm font-bold mb-2 text-GrayCalido">
-          Email:
+      <div className='flex flex-col'>
+        <label
+          htmlFor='email'
+          className='block text-sm font-bold mb-2 text-GrayCalido'
+        >
+          Correo Electrónico:
         </label>
         <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="JohnDoe@gmail.com"
-          className="w-full bg-BlackCalido text-sm border border-BorderColor rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-GrayCalido"
+          {...form.register("email")}
+          type='email'
+          id='email'
+          placeholder='JohnDoe@gmail.com'
+          disabled={isPending}
+          className='w-full bg-BlackCalido text-sm border border-BorderColor rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-GrayCalido'
         />
       </div>
 
       {/* Campo Contraseña */}
-      <div>
+      <div className='flex flex-col'>
         <label
-          htmlFor="password"
-          className="block text-sm font-bold mb-2 text-GrayCalido"
+          htmlFor='password'
+          className='block text-sm font-bold mb-2 text-GrayCalido'
         >
           Contraseña:
         </label>
         <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="*******"
-          className="w-full bg-BlackCalido text-sm border border-BorderColor rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-GrayCalido"
+          {...form.register("password")}
+          type='password'
+          id='password'
+          placeholder='*******'
+          disabled={isPending}
+          className='w-full bg-BlackCalido text-sm border border-BorderColor rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-GrayCalido'
         />
       </div>
 
+      {/* Campo Confirmar Contraseña */}
+      <div className='flex flex-col'>
+        <label
+          htmlFor='confirmPassword'
+          className='block text-sm font-bold mb-2 text-GrayCalido'
+        >
+          Confirmar Contraseña:
+        </label>
+        <input
+          {...form.register("confirmPassword")}
+          type='password'
+          id='confirmPassword'
+          placeholder='*******'
+          disabled={isPending}
+          className='w-full bg-BlackCalido text-sm border border-BorderColor rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-GrayCalido'
+        />
+      </div>
+
+      {/* Mensaje de error */}
+      {error && <p className='text-sm text-red-500'>{error}</p>}
+
       {/* Botón de Registro */}
-      <div className="mt-4">
+      <div>
         <button
-          type="submit"
-          className="w-full bg-WhiteVariacion  text-BlackOscuro font-leaguespartan font-semibold border border-BorderColor rounded-lg p-2 hover:bg-gray-300"
+          type='submit'
+          disabled={isPending}
+          className='w-full bg-WhiteVariacion text-BlackOscuro font-leaguespartan font-semibold border border-BorderColor rounded-lg p-2 hover:bg-gray-300'
         >
           Registrate
         </button>
@@ -98,4 +130,4 @@ const Form: React.FC = () => {
   );
 };
 
-export default Form;
+export default RegisterForm;

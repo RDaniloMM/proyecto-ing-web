@@ -24,6 +24,7 @@ export const registerSchema = z
       .string({ required_error: "El correo electrónico es obligatorio" })
       .min(1, "El correo electrónico es obligatorio")
       .email("Correo electrónico no válido"),
+    rol: z.enum(["Estudiante", "Docente"]),
     password: z
       .string({ required_error: "La contraseña es obligatoria" })
       .min(6, "Debe tener al menos 6 caracteres")

@@ -74,6 +74,7 @@ export const registerAction = async (values: registerType) => {
         email: data.email,
         name: data.name,
         password: passwordHash,
+        rol: data.rol,
       },
     });
 

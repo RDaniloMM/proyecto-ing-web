@@ -1,8 +1,19 @@
+"use client";
+import { useState } from "react";
 import Header from "@/components/ui/Header";
 import StepIndicator from "@/app/(auth)/register/_components/StepIndicator";
 import PlanCard from "@/app/(auth)/register/_components/PlanCard";
 
 export default function HomePage() {
+  // Estado para almacenar la selección del plan
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+
+  // Maneja la selección de un plan
+  const handlePlanSelection = (plan: string) => {
+    setSelectedPlan(plan);
+    console.log("Plan seleccionado:", plan); // Depuración
+  };
+
   return (
     <>
       <Header />
@@ -29,6 +40,7 @@ export default function HomePage() {
                 "Participación en foros de discusión",
                 "Conexión con grupos y comunidades",
               ]}
+              onSelectPlan={handlePlanSelection} // Pasa la función como callback
             />
             <PlanCard
               title='Plan Docente'
@@ -40,9 +52,19 @@ export default function HomePage() {
                 "Conexión con grupos y comunidades",
                 "Oportunidad de crear y gestionar cursos",
               ]}
+              onSelectPlan={handlePlanSelection} // Pasa la función como callback
             />
           </div>
         </div>
+
+        {/* Mostrar el plan seleccionado */}
+        {selectedPlan && (
+          <div className='mt-8 text-center'>
+            <p className='text-lg'>
+              Has seleccionado: <strong>{selectedPlan}</strong>
+            </p>
+          </div>
+        )}
       </main>
     </>
   );

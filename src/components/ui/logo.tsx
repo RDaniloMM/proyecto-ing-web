@@ -17,7 +17,7 @@ export default function Logo({
   return (
     <div className={cn("flex items-center", className)}>
       <img
-        src='logo2.png'
+        src='logo.svg'
         alt='logo'
         className='w-10 h-10'
       />
