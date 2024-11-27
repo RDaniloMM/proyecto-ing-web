@@ -1,9 +1,14 @@
 "use client";
 
-import React from "react";
-import Carousel from "@/app/(public)/student/_components/carousel";
+import { useState } from "react";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/app/(public)/student/_components/app-sidebar";
+import Header from "@/app/(public)/student/_components/header";
+import Carousel from "@/app/(public)/student/_components/carousel"; // Importa el componente carrusel
 
-export default function HomePage() {
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+
   const recommendations = [
     { id: 1, title: "Informe de LAB-01", description: "Ing. Web y Aplicaciones Móviles" },
     { id: 2, title: "Ejercicios de Simulación de Sistemas", description: "Simulación de Sistemas" },
@@ -23,9 +28,32 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="p-4">
-      <Carousel title="RECOMENDACIONES" items={recommendations} />
-      <Carousel title="RECURSOS RECIENTES" items={recentResources} />
-    </div>
+    <SidebarProvider>
+      <div className="h-screen w-screen flex flex-col">
+        {/* Header */}
+        <Header />
+
+        {/* Contenedor principal */}
+        <div className="flex flex-1 pt-[70px]">
+          {/* Sidebar */}
+          <div
+            className={`transition-all duration-300 ${
+              isSidebarCollapsed ? "w-16" : "w-64"
+            }`}
+          >
+            <AppSidebar
+              isCollapsed={isSidebarCollapsed}
+              onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            />
+          </div>
+
+          {/* Main Content: Solo Carrusel */}
+          <main className="flex-1 text-WhiteCalido p-8">
+            <Carousel title="RECOMENDACIONES" items={recommendations} />
+            <Carousel title="RECURSOS RECIENTES" items={recentResources} />
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }

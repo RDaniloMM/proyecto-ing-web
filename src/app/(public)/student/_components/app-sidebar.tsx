@@ -22,6 +22,7 @@ import {
   SidebarFooter,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
+import { homeStudentRoute, chatsStudentRoute, coursesStudentRoute } from "@/auth/routes";
 
 interface AppSidebarProps {
   isCollapsed: boolean;
@@ -29,12 +30,10 @@ interface AppSidebarProps {
 }
 
 const items = [
-  { title: 'Inicio', url: '#', icon: HomeIcon },
-  { title: 'Chats', url: '#', icon: ChatBubbleLeftIcon },
-  { title: 'Grupos y comunidades', url: '#', icon: UsersIcon },
-  { title: 'Foros de discusión', url: '#', icon: MagnifyingGlassIcon },
+  { title: 'Inicio', url: homeStudentRoute, icon: HomeIcon },
+  { title: 'Chats', url: chatsStudentRoute, icon: ChatBubbleLeftIcon },
   { title: 'Recursos educativos', url: '#', icon: CogIcon },
-  { title: 'Cursos', url: '#', icon: BookOpenIcon },
+  { title: 'Cursos', url: coursesStudentRoute, icon: BookOpenIcon },
   { title: 'Mis clases', url: '#', icon: AcademicCapIcon },
 ];
 

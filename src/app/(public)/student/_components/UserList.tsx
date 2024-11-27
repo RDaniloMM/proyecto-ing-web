@@ -26,7 +26,7 @@ const users: User[] = [
 
 const UserList = () => {
     return (
-      <div className="bg-BlackCalido rounded-lg shadow-lg p-4 h-[900px] overflow-y-auto w-full max-w-xs border border-BorderColor">
+      <div className="bg-BlackCalido rounded-lg shadow-lg p-4 h-full overflow-y-auto w-full max-w-xs border border-BorderColor">
         <ul className="space-y-4">
           {users.map((user) => (
             <li
