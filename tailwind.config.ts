@@ -10,18 +10,19 @@ const config: Config = {
   ],
   theme: {
   	extend: {
-		fontFamily: {
-			leaguespartan: ["League Spartan", "sans-serif"],
-			lato: ["Lato", "sans-serif"],
-		},
+  		fontFamily: {
+  			leaguespartan: ["League Spartan", "sans-serif"],
+  			lato: ["Lato", "sans-serif"]
+  		},
   		colors: {
-			WhiteCalido: '#EFEFEF',
-			WhiteVariacion: '#EAEAEB',
-			BlackCalido: '#141719',
-			BlackOscuro: '#0E0F11',
-			GrayCalido: '#808284',
-			BorderColor: '#262626',
-			VioletCalido: '#5A65CA',
+  			WhiteCalido: '#EAEAEB',
+  			BlackCalido: '#141719',
+  			BlackOscuro: '#0E0F11',
+			GrayPalido: '#6D6D6D',
+  			GrayCalido: '#808284',
+			GrayOscuro: '#2A2C31',
+  			BorderColor: '#262626',
+  			VioletCalido: '#5A65CA',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -62,16 +63,6 @@ const config: Config = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			},
-  			sidebar: {
-  				DEFAULT: 'hsl(var(--sidebar-background))',
-  				foreground: 'hsl(var(--sidebar-foreground))',
-  				primary: 'hsl(var(--sidebar-primary))',
-  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-  				accent: 'hsl(var(--sidebar-accent))',
-  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-  				border: 'hsl(var(--sidebar-border))',
-  				ring: 'hsl(var(--sidebar-ring))'
-  			}
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

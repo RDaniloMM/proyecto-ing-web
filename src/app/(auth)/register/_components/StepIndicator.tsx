@@ -6,7 +6,7 @@ const StepIndicator = ({ currentStep }: { currentStep: number }) => {
         <div
           className={`w-[60px] h-[60px] rounded-full flex items-center justify-center text-[30px] border font-bold ${
             currentStep === 1
-              ? 'bg-VioletCalido text-WhiteVariacion border-BorderColor'
+              ? 'bg-VioletCalido text-WhiteCalido border-BorderColor'
               : 'bg-BlackCalido text-GrayCalido border-BorderColor'
           }`}
         >
@@ -20,7 +20,7 @@ const StepIndicator = ({ currentStep }: { currentStep: number }) => {
         <div
           className={`w-[60px] h-[60px] rounded-full flex items-center justify-center text-[30px] border font-bold ${
             currentStep === 2
-              ? 'bg-VioletCalido text-WhiteVariacion border-BorderColor'
+              ? 'bg-VioletCalido text-WhiteCalido border-BorderColor'
               : 'bg-BlackCalido text-GrayCalido border-BorderColor'
           }`}
         >
@@ -34,7 +34,7 @@ const StepIndicator = ({ currentStep }: { currentStep: number }) => {
         <div
           className={`w-[60px] h-[60px] rounded-full flex items-center justify-center text-[30px] border font-bold ${
             currentStep === 3
-              ? 'bg-VioletCalido text-WhiteVariacion border-BorderColor'
+              ? 'bg-VioletCalido text-WhiteCalido border-BorderColor'
               : 'bg-BlackCalido text-GrayCalido border-BorderColor'
           }`}
         >

@@ -14,7 +14,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
   onSelectPlan,
 }) => {
   return (
-    <div className='bg-BlackCalido text-WhiteVariacion border border-BorderColor rounded-lg p-6 h-auto flex flex-col justify-between'>
+    <div className='bg-BlackCalido text-WhiteCalido border border-BorderColor rounded-lg p-6 h-auto flex flex-col justify-between'>
       <div>
         <h3 className='text-2xl font-bold mb-4'>{title}</h3>
         <p className='font-bold text-GrayCalido mb-4'>Requisitos:</p>
@@ -37,7 +37,7 @@ const PlanCard: React.FC<PlanCardProps> = ({
       </div>
       <div className='flex justify-center'>
         <button
-          className='bg-WhiteVariacion text-BlackOscuro rounded-lg font-semibold font-leaguespartan hover:bg-gray-300 w-[142px] h-[47px]'
+          className='bg-WhiteCalido text-BlackOscuro rounded-lg font-semibold font-leaguespartan hover:bg-gray-300 w-[142px] h-[47px]'
           onClick={() => onSelectPlan(title)} // Llama al callback con el título del plan
         >
           Escoger Plan

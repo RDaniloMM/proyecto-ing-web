@@ -134,7 +134,7 @@ const RegisterForm = () => {
         <button
           type='submit'
           disabled={isPending}
-          className='w-full bg-WhiteVariacion text-BlackOscuro font-leaguespartan font-semibold border border-BorderColor rounded-lg p-2 hover:bg-gray-300'
+          className='w-full bg-WhiteCalido text-BlackOscuro font-leaguespartan font-semibold border border-BorderColor rounded-lg p-2 hover:bg-gray-300'
         >
           Registrar datos
         </button>
