@@ -240,6 +240,7 @@ model User {
   id                                         String                      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                                       String?
   email                                      String                      @unique
+  emailVerified                              DateTime?                   @map("email_verified")
   password                                   String
   rol                                        rol
   biografia                                  String?
