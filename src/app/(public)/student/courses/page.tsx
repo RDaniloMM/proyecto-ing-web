@@ -19,7 +19,7 @@ const items = [
   // Agrega más items si es necesario
 ];
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   return (

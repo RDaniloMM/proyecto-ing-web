@@ -8,7 +8,7 @@ import SearchBar from "../_components/SearchBar";
 import UserList from "../_components/UserList";
 import ChatWindow from "../_components/ChatWindow"; // Importa el nuevo componente
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   return (

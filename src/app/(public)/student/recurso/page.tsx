@@ -6,7 +6,7 @@ import { AppSidebar } from "@/app/(public)/student/_components/app-sidebar";
 import Header from "@/app/(public)/student/_components/header";
 import EducationalResource from "../_components/EducationalResource"; // Importa el componente creado
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   return (
