@@ -15,7 +15,7 @@ export default function Layout() {
     { id: 3, title: "Creación de Videojuegos con Unity", description: "Realidad Virtual" },
     { id: 4, title: "Transformaciones elementales de objetos 3D", description: "Diseño Asistido por Computadora" },
     { id: 5, title: "Algoritmos de Cifrado", description: "Seguridad Informática" },
-    { id: 6, title: "Creación de proyectos innovadores", description: "Taller de Emprendimiento e Innovación" },
+    { id: 6, title: "Creación de proyectos e innovación", description: "Taller de Emprendimiento e Innovación" },
   ];
 
   const recentResources = [
